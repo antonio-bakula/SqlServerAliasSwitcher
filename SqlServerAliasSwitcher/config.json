@@ -1,0 +1,28 @@
+﻿{
+  "AliasConfigurations": [
+    {
+      "Name": "Doma",
+      "WindowsServices": [ ],
+      "Aliases": [
+        { "Name": "TESTER", "Alias": "BAKULA-SERVER\\SQLExpress" },
+        { "Name": "TESTER\\SQLExpress", "Alias": "BAKULA-SERVER\\SQLExpress" }
+      ]
+    },
+    {
+      "Name": "Ured",
+      "WindowsServices": [ ],
+      "Aliases": [
+        { "Name": "TESTER", "Alias": "tester.wem.local" },
+        { "Name": "TESTER\\SQLExpress", "Alias": "tester.wem.local\\SQLExpress" }
+      ]
+    },
+    {
+      "Name": "Laptop",
+      "WindowsServices": ["MSSQL$SQLEXPRESS", "SQLBrowser"],
+      "Aliases": [
+        { "Name": "TESTER", "Alias": "ABAKULA-LAPTOP\\SQLEXPRESS" },
+        { "Name": "TESTER\\SQLExpress", "Alias": "ABAKULA-LAPTOP\\SQLEXPRESS" }
+      ]
+    }
+  ]
+}
