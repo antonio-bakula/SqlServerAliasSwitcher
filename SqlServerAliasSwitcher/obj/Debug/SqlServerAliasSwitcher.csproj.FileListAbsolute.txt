@@ -1,1 +1,0 @@
-W:\Code\github\SqlServerAliasSwitcher\SqlServerAliasSwitcher\bin\Debug\SqlServerAliasSwitcher.exe.config
