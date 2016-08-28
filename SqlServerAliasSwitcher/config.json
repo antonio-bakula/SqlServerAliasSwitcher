@@ -1,7 +1,7 @@
 ﻿{
   "AliasConfigurations": [
     {
-      "Name": "Doma",
+      "Name": "Home",
       "WindowsServices": [ ],
       "Aliases": [
         { "Name": "TESTER", "Alias": "BAKULA-SERVER\\SQLExpress" },
@@ -9,7 +9,7 @@
       ]
     },
     {
-      "Name": "Ured",
+      "Name": "Office",
       "WindowsServices": [ ],
       "Aliases": [
         { "Name": "TESTER", "Alias": "tester.wem.local" },
