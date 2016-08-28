@@ -12,11 +12,11 @@ Configuration is done trough config.json file, example config [SqlServerAliasSwi
 *AliasConfigurations* - Alias configurations for one place (office, home, laptop etc.)
 
 ######AliasConfigurations members:
-*Name* - Alias configuration Name, will be used for caption of tray menu item.
-*WindowsServices* - List of  windows service names that should be started when this configuration is set as active (e.g. local SQL server on laptop).
+*Name* - Alias configuration Name, will be used for caption of tray menu item.  
+*WindowsServices* - List of  windows service names that should be started when this configuration is set as active (e.g. local SQL server on laptop).  
 *Aliases* - Array of alias informations
 
 ######Alias array members:
-*Name* - SQL Server Alias name
+*Name* - SQL Server Alias name  
 *Alias* - Address of real SQL Server that will be used for this alias
 
