@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,12 +16,19 @@ namespace SqlServerAliasSwitcher
     [STAThread]
     static void Main()
     {
-      Application.EnableVisualStyles();
-      Application.SetCompatibleTextRenderingDefault(false);
-      _switcher = new Switcher();
-      Application.ApplicationExit += Application_ApplicationExit;
-      _switcher.Start();
-      Application.Run();
+      try
+      {
+        Application.EnableVisualStyles();
+        Application.SetCompatibleTextRenderingDefault(false);
+        _switcher = new Switcher();
+        Application.ApplicationExit += Application_ApplicationExit;
+        _switcher.Start();
+        Application.Run();
+      }
+      catch (Exception e)
+      {
+        EventLog.WriteEntry("SqlServerAliasSwitcher", "Exception raise while starting application: " + e.Message, EventLogEntryType.Error);
+      }
     }
 
     static void Application_ApplicationExit(object sender, EventArgs e)
