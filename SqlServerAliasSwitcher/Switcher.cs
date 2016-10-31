@@ -48,6 +48,11 @@ namespace SqlServerAliasSwitcher
     private string GetActiveAliasConfiguration()
     {
       var key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\MSSQLServer\Client\ConnectTo");
+      if (key == null)
+      {
+        return "";
+      }
+
       string active = "";
       try
       {
@@ -125,6 +130,12 @@ namespace SqlServerAliasSwitcher
     private void WriteConfigurationToRegistry(AliasConfiguration conf)
     {
       var key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\MSSQLServer\Client\ConnectTo", true);
+
+      if (key == null)
+      {
+        key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Microsoft\MSSQLServer\Client\ConnectTo");
+      }
+
       try
       {
         var aliasValueNames = key.GetValueNames().ToList();
