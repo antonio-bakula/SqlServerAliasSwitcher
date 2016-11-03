@@ -152,11 +152,26 @@ namespace SqlServerAliasSwitcher
 
     private void StartService(List<string> services)
     {
+      string errorsStartingServices = "";
       foreach (string serviceName in services)
       {
         var controller = new ServiceController(serviceName);
-        if (controller.Status != ServiceControllerStatus.Running)
+        if (controller.StartType == ServiceStartMode.Disabled)
+        {
+          if (!string.IsNullOrEmpty(errorsStartingServices))
+          {
+            errorsStartingServices += Environment.NewLine;
+          }
+          errorsStartingServices += string.Format("Cannot start service {0}. Service is disabled.", serviceName);
+        }
+        else if (controller.Status != ServiceControllerStatus.Running)
+        {
           controller.Start();
+        }
+      }
+      if (!string.IsNullOrEmpty(errorsStartingServices))
+      {
+        MessageBox.Show(errorsStartingServices, "SqlServerAliasSwitcher", MessageBoxButtons.OK, MessageBoxIcon.Warning);
       }
     }
 
