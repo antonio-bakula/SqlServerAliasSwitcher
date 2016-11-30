@@ -27,7 +27,8 @@ namespace SqlServerAliasSwitcher
       }
       catch (Exception e)
       {
-        EventLog.WriteEntry("SqlServerAliasSwitcher", "Exception raise while starting application: " + e.Message, EventLogEntryType.Error);
+        MessageBox.Show("SqlServerAliasSwitcher raised Exception while starting: " + Environment.NewLine + e.Message);
+        EventLog.WriteEntry("SqlServerAliasSwitcher", "Exception raised while starting application: " + e.Message, EventLogEntryType.Error);
       }
     }
 
