@@ -22,9 +22,20 @@ namespace SqlServerAliasSwitcher
     public List<AliasDefinition> Aliases { get; set; }
   }
 
+  public class SwitcherCommand
+  {
+    public string Name { get; set; }
+    public string Sql { get; set; }
+    public int PopupWidth { get; set; }
+    public int PopupHeight { get; set; }
+  }
+
+
   public class Configuration
   {
     public List<AliasConfiguration> AliasConfigurations { get; set; }
+    public List<SwitcherCommand> DataCommands { get; set; }
+    public string ConnectionString { get; set; }
   }
 
   public static class ConfigurationEngine

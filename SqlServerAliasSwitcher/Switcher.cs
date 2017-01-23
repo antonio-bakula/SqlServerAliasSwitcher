@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
@@ -11,7 +12,7 @@ using System.Windows.Forms;
 
 namespace SqlServerAliasSwitcher
 {
-  public class Switcher
+  public class AliasSwitcher
   {
     private NotifyIcon notifyIcon = null;
     private ContextMenu menu = null;
@@ -31,6 +32,21 @@ namespace SqlServerAliasSwitcher
         this.menu.MenuItems.Add(mi);
       }
 
+      if (!string.IsNullOrEmpty(ConfigurationEngine.Configuration.ConnectionString) && ConfigurationEngine.Configuration.DataCommands.Any())
+      {
+        this.menu.MenuItems.Add("-");
+
+        foreach (var dataCmd in ConfigurationEngine.Configuration.DataCommands)
+        {
+          var menuItemCmd = new MenuItem();
+          menuItemCmd.Text = dataCmd.Name;
+          menuItemCmd.Tag = dataCmd;
+          menuItemCmd.Click += menuItemCmd_Click;
+          this.menu.MenuItems.Add(menuItemCmd);
+        }
+
+      }
+
       this.menu.MenuItems.Add("-");
       // exit
       var menuItemExit = new MenuItem();
@@ -43,6 +59,18 @@ namespace SqlServerAliasSwitcher
       this.notifyIcon.Click += notifyIcon_Click;
       this.notifyIcon.ContextMenu = this.menu;
       this.notifyIcon.Visible = true;
+    }
+
+    void menuItemCmd_Click(object sender, EventArgs e)
+    {
+      var menuItem = (MenuItem)sender;
+      var cmd = (SwitcherCommand)menuItem.Tag;
+      if (cmd != null)
+      {
+        var fsd = new FormShowData();
+        fsd.SetCommand(cmd);
+        fsd.ShowDialog();
+      }
     }
 
     private string GetActiveAliasConfiguration()
@@ -118,11 +146,11 @@ namespace SqlServerAliasSwitcher
         }
         if (activate == activeAfterChange)
         {
-          this.notifyIcon.ShowBalloonTip(2, "SQL Server Alias Switcher", "Configuration successfully changed to: " + activate, ToolTipIcon.Info);
+          this.notifyIcon.ShowBalloonTip(1500, "SQL Server Alias Switcher", "Configuration successfully changed to: " + activate, ToolTipIcon.Info);
         }
         else
         {
-          this.notifyIcon.ShowBalloonTip(2, "SQL Server Alias Switcher", "Error ! Couldn't change configuration to: " + activate, ToolTipIcon.Error);
+          this.notifyIcon.ShowBalloonTip(1500, "SQL Server Alias Switcher", "Error ! Couldn't change configuration to: " + activate, ToolTipIcon.Error);
         }
       }
     }

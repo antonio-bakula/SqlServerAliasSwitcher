@@ -18,11 +18,21 @@
     },
     {
       "Name": "Laptop",
-      "WindowsServices": ["MSSQL$SQLEXPRESS", "SQLBrowser"],
+      "WindowsServices": [ "MSSQL$SQLEXPRESS", "SQLBrowser" ],
       "Aliases": [
-        { "Name": "TESTER", "Alias": "ABAKULA-LAPTOP\\SQLEXPRESS" },
-        { "Name": "TESTER\\SQLExpress", "Alias": "ABAKULA-LAPTOP\\SQLEXPRESS" }
+        { "Name": "TESTER", "Alias": "ABAKULA-YOGA\\SQLEXPRESS" },
+        { "Name": "TESTER\\SQLExpress", "Alias": "ABAKULA-YOGA\\SQLEXPRESS" }
       ]
     }
-  ]
+  ],
+  "DataCommands": [
+    {
+      "Name": "&Databases",
+      "Sql": "SELECT dbid, name FROM master.dbo.sysdatabases where name not in ('master', 'tempdb', 'model', 'msdb')",
+      "PopupWidth": 320,
+      "PopupHeight": 580
+    }
+  ],
+  "ConnectionString": "data source=TESTER\\SQLExpress; uid=admin; pwd=direktor;",
+  "ConnectionStringRel": "data source=TESTER\\SQLExpress; Integrated Security = SSPI;"
 }

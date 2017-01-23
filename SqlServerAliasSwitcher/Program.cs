@@ -9,7 +9,7 @@ namespace SqlServerAliasSwitcher
 {
   static class Program
   {
-    private static Switcher _switcher = null; 
+    private static AliasSwitcher _switcher = null; 
     /// <summary>
     /// The main entry point for the application.
     /// </summary>
@@ -20,7 +20,7 @@ namespace SqlServerAliasSwitcher
       {
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
-        _switcher = new Switcher();
+        _switcher = new AliasSwitcher();
         Application.ApplicationExit += Application_ApplicationExit;
         _switcher.Start();
         Application.Run();
