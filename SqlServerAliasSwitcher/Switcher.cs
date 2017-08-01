@@ -24,12 +24,17 @@ namespace SqlServerAliasSwitcher
       // switch itens
       foreach (var conf in ConfigurationEngine.Configuration.AliasConfigurations)
       {
+        bool isActiveConfig = conf.Name == activeAliasConfig;
         var mi = new MenuItem();
         mi.Text = conf.Name;
         mi.Name = "conf_" + conf.Name;
         mi.Click += AliasConfigMenuItemClick;
-        mi.Checked = conf.Name == activeAliasConfig;
+        mi.Checked = isActiveConfig;
         this.menu.MenuItems.Add(mi);
+        if (isActiveConfig && conf.WindowsServices.Any())
+        {
+          StartService(conf.WindowsServices);
+        }
       }
 
       if (!string.IsNullOrEmpty(ConfigurationEngine.Configuration.ConnectionString) && ConfigurationEngine.Configuration.DataCommands.Any())
