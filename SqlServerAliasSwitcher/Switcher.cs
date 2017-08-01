@@ -157,25 +157,49 @@ namespace SqlServerAliasSwitcher
 
     private void WriteConfigurationToRegistry(AliasConfiguration conf)
     {
-      var key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\MSSQLServer\Client\ConnectTo", true);
-
-      if (key == null)
+      var keys = GetRegistry32And64BitSubKeys(RegistryHive.LocalMachine, @"SOFTWARE\Microsoft\MSSQLServer\Client\ConnectTo", true);
+      foreach (var key in keys)
       {
-        key = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Microsoft\MSSQLServer\Client\ConnectTo");
-      }
-
-      try
-      {
-        var aliasValueNames = key.GetValueNames().ToList();
-        foreach (var alias in conf.Aliases)
+        try
         {
-          key.SetValue(alias.Name, "DBMSSOCN," + alias.Alias, RegistryValueKind.String);
+          var aliasValueNames = key.GetValueNames().ToList();
+          foreach (var alias in conf.Aliases)
+          {
+            key.SetValue(alias.Name, "DBMSSOCN," + alias.Alias, RegistryValueKind.String);
+          }
+        }
+        finally
+        {
+          key.Close();
         }
       }
-      finally
+    }
+    
+    private List<RegistryKey> GetRegistry32And64BitSubKeys(RegistryHive hive, string path, bool writeable)
+    {
+      var key32Bit = GetRegistrySubKey(hive, path, writeable, false);
+      var key64Bit = GetRegistrySubKey(hive, path, writeable, true);
+      var result = new List<RegistryKey>();
+      if (key32Bit != null)
       {
-        key.Close();
+        result.Add(key32Bit);
       }
+      if (key64Bit != null)
+      {
+        result.Add(key64Bit);
+      }
+      return result;
+    }
+
+    private RegistryKey GetRegistrySubKey(RegistryHive hive, string path, bool writeable, bool regKey64Bit)
+    {
+      var key = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, regKey64Bit ? RegistryView.Registry64 : RegistryView.Registry32);
+      var subKey = key.OpenSubKey(path, writeable);
+      if (subKey == null)
+      {
+        subKey = key.CreateSubKey(path);
+      }
+      return subKey;
     }
 
     private void StartService(List<string> services)
