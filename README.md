@@ -5,7 +5,7 @@ Little application that solves problem connecting to SQL server for development.
 file that holds connection string (web.config in my case) and that file was under source control so I have to be carefull not
 commit config file with temporary changes. Reason for this changes is a fact that I work on my laptop and dock it at home and at office and on both places I have SQL server on separate machines.
 
-Binaries download at http://www.antoniob.com/sql-server-alias-switcher.html
+Binaries download at [http://www.antoniob.com/sql-server-alias-switcher.html](http://www.antoniob.com/sql-server-alias-switcher.html)
 
 ### Configuration
 Configuration is done trough config.json file, example config [SqlServerAliasSwitcher/SqlServerAliasSwitcher/config.json](https://github.com/antonio-bakula/SqlServerAliasSwitcher/blob/master/SqlServerAliasSwitcher/config.json) sets 3 different configurations, each one suitable for different SQL server locations in different places / local network. In example file there are 3 locations: work, home, laptop. Each configuration defines two Aliases: TESTER, TESTER\SQLExpress.
